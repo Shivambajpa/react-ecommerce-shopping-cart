@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  base: './'  // Vercel ke liye ye important hai
+  plugins: [react()],
+  base: '/ecommerce-project-2026/', 
 })
