@@ -1,8 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import SearchBar from "../components/SearchBar";
-import CategoryFilter from "../components/CategoryFilter";
-import ProductCard from "../components/ProductCard";
+import { CartContext } from "../context/CartContext";import ProductCard from "../components/ProductCard";
 
 function Home() {
   const [products, setProducts] = useState([]);
