@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import { getProducts } from "../services/api";
-
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
 import ProductCard from "../components/ProductCard";
@@ -17,10 +15,11 @@ function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getProducts();
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
         setProducts(data);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
@@ -30,14 +29,10 @@ function Home() {
   }, []);
 
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchesCategory =
-      category === "all" || product.category === category;
-
-    return matchesSearch && matchesCategory;
+    return (
+      product.title.toLowerCase().includes(search.toLowerCase()) &&
+      (category === "all" || product.category === category)
+    );
   });
 
   const cartCount = cart.reduce(
@@ -47,38 +42,29 @@ function Home() {
 
   if (loading) {
     return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <h2>Loading Products...</h2>
-      </div>
+      <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+        Loading Products...
+      </h2>
     );
   }
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Simple E-Commerce Store</h1>
+      <h1 style={{ textAlign: "center" }}>🛍 Our Products</h1>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-          flexWrap: "wrap",
-          gap: "10px",
-        }}
-      >
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-        />
-
-        <h3>🛒 Cart ({cartCount})</h3>
-      </div>
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+      />
 
       <CategoryFilter
         category={category}
         setCategory={setCategory}
       />
+
+      <h3 style={{ margin: "20px 0" }}>
+        🛒 Cart Items: {cartCount}
+      </h3>
 
       <div
         style={{
@@ -87,17 +73,13 @@ function Home() {
           gap: "20px",
         }}
       >
-        {filteredProducts.length === 0 ? (
-          <h2>No Products Found</h2>
-        ) : (
-          filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              addToCart={addToCart}
-            />
-          ))
-        )}
+        {filteredProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            addToCart={addToCart}
+          />
+        ))}
       </div>
     </div>
   );

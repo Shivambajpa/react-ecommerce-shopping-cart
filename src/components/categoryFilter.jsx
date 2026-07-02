@@ -1,18 +1,23 @@
 function CategoryFilter({ category, setCategory }) {
+  const categories = [
+    "all",
+    "electronics",
+    "jewelery",
+    "men's clothing",
+    "women's clothing",
+  ];
+
   return (
     <select
       value={category}
       onChange={(e) => setCategory(e.target.value)}
-      style={{
-        padding: "10px",
-        marginBottom: "20px",
-      }}
+      style={{ padding: "10px", marginTop: "10px" }}
     >
-      <option value="all">All</option>
-      <option value="electronics">Electronics</option>
-      <option value="jewelery">Jewellery</option>
-      <option value="men's clothing">Men's Clothing</option>
-      <option value="women's clothing">Women's Clothing</option>
+      {categories.map((c) => (
+        <option key={c} value={c}>
+          {c}
+        </option>
+      ))}
     </select>
   );
 }
