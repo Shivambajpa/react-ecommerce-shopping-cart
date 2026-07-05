@@ -1,46 +1,50 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  useEffect(()=>{
+localStorage.setItem("cart",JSON.stringify(cart));
+},[cart]);
 
-  // Add Product
+useEffect(()=>{
+const saved=JSON.parse(localStorage.getItem("cart"));
+
+if(saved){
+setCart(saved);
+}
+},[]);
+  // Add to Cart
   const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find(
-        (item) => item.id === product.id
-      );
+    const exist = cart.find((item) => item.id === product.id);
 
-      if (existingItem) {
-        return prevCart.map((item) =>
+    if (exist) {
+      setCart(
+        cart.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
-        );
-      }
-
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
+        )
+      );
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
   };
 
-  // Remove Product
+  // Remove Item
   const removeFromCart = (id) => {
-    setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== id)
-    );
+    setCart(cart.filter((item) => item.id !== id));
   };
 
   // Increase Quantity
   const increaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    setCart(
+      cart.map((item) =>
         item.id === id
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -50,24 +54,21 @@ export const CartProvider = ({ children }) => {
 
   // Decrease Quantity
   const decreaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                item.quantity > 1
-                  ? item.quantity - 1
-                  : 1,
-            }
-          : item
-      )
+    setCart(
+      cart
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
     );
   };
 
-  // Clear Cart
+  // ✅ Clear Cart
   const clearCart = () => {
     setCart([]);
+    localStorage.removeItem("cart");
   };
 
   return (
@@ -78,10 +79,10 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
-        clearCart,
+        clearCart, // ✅ Important
       }}
     >
       {children}
     </CartContext.Provider>
   );
-};
+}
