@@ -5,8 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Login.jsx";import Register from "./pages/Register";
 import Success from "./pages/Success";
 
 function App() {
