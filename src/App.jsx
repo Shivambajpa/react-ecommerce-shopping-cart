@@ -5,9 +5,9 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
-import Login from "./pages/Login.jsx";import Register from "./pages/Register";
+import Register from "./pages/Register";
 import Success from "./pages/Success";
-
+import Login from "./pages/Login";
 function App() {
   return (
     <BrowserRouter>
