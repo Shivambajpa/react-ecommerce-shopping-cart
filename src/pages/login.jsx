@@ -18,9 +18,7 @@ export default function Login() {
 
     if (email === user.email && password === user.password) {
       localStorage.setItem("isLoggedIn", "true");
-
       alert("Login Successful!");
-
       navigate("/");
     } else {
       alert("Invalid Email or Password");
@@ -28,17 +26,7 @@ export default function Login() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "60px auto",
-        padding: "30px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-        textAlign: "center",
-      }}
-    >
+    <div style={{ maxWidth: "400px", margin: "60px auto", padding: "30px", border: "1px solid #ddd", borderRadius: "10px", textAlign: "center" }}>
       <h2>Login</h2>
 
       <input
@@ -46,11 +34,7 @@ export default function Login() {
         placeholder="Enter Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "15px",
-        }}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
       />
 
       <input
@@ -58,32 +42,18 @@ export default function Login() {
         placeholder="Enter Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
+        style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
       />
 
       <button
         onClick={handleLogin}
-        style={{
-          width: "100%",
-          padding: "12px",
-          backgroundColor: "green",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontSize: "16px",
-        }}
+        style={{ width: "100%", padding: "12px", backgroundColor: "green", color: "#fff", border: "none", borderRadius: "5px" }}
       >
         Login
       </button>
 
       <p style={{ marginTop: "20px" }}>
-        Don't have an account?{" "}
-        <Link to="/register">Register</Link>
+        Don't have an account? <Link to="/register">Register</Link>
       </p>
     </div>
   );

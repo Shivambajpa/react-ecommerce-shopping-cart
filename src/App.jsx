@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
-import Login from "./pages/Login";
+import Login from "./pages/login";
 function App() {
   return (
     <BrowserRouter>
@@ -17,9 +17,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<Success />} />
+                <Route path="/login" element={<Login />} />
+
       </Routes>
 
       <Footer />
