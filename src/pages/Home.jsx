@@ -67,7 +67,7 @@ function Home() {
   );
   console.log(products.length);
 console.log(filteredProducts.length);
-console.log(totalPages);
+console.log(totalPages);  
 
   if (loading) {
     return <Loading />;

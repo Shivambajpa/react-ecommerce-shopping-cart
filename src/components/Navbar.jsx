@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { WishlistContext } from "../context/WishlistContext";
 
-function Navbar() {
+function Navbar({ setIsOpen }) {
   const { cart } = useContext(CartContext);
   const { wishlist } = useContext(WishlistContext);
+
+  const navigate = useNavigate();
 
   const totalItems = cart.reduce(
     (total, item) => total + item.quantity,
@@ -19,8 +21,8 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
-    alert("Logout Successful");
-    window.location.reload();
+    alert("Logout Successful!");
+    navigate("/login");
   };
 
   return (
@@ -29,37 +31,60 @@ function Navbar() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#222",
+        backgroundColor: "#1f2937",
         color: "#fff",
-        padding: "15px 30px",
+        padding: "15px 25px",
         position: "sticky",
         top: 0,
-        zIndex: 1000,
+        zIndex: 1100,
       }}
     >
-      <Link
-        to="/"
-        style={{
-          color: "white",
-          textDecoration: "none",
-          fontSize: "24px",
-          fontWeight: "bold",
-        }}
-      >
-        🛒 React Store
-      </Link>
-
+      {/* Left Side */}
       <div
         style={{
           display: "flex",
-          gap: "20px",
           alignItems: "center",
+          gap: "15px",
+        }}
+      >
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#fff",
+            fontSize: "28px",
+            cursor: "pointer",
+          }}
+        >
+          ☰
+        </button>
+
+        <Link
+          to="/"
+          style={{
+            color: "#fff",
+            textDecoration: "none",
+            fontSize: "24px",
+            fontWeight: "bold",
+          }}
+        >
+          🛒 React Store
+        </Link>
+      </div>
+
+      {/* Right Side */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
         }}
       >
         <Link
           to="/"
           style={{
-            color: "white",
+            color: "#fff",
             textDecoration: "none",
           }}
         >
@@ -69,7 +94,7 @@ function Navbar() {
         <Link
           to="/cart"
           style={{
-            color: "white",
+            color: "#fff",
             textDecoration: "none",
           }}
         >
@@ -79,7 +104,7 @@ function Navbar() {
         <Link
           to="/wishlist"
           style={{
-            color: "white",
+            color: "#fff",
             textDecoration: "none",
           }}
         >
@@ -88,19 +113,24 @@ function Navbar() {
 
         {isLoggedIn ? (
           <>
-            <span style={{ color: "#fff" }}>
-              👋 {user?.name}
+            <span
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              👋 {user?.name || "User"}
             </span>
 
             <button
               onClick={handleLogout}
               style={{
-                backgroundColor: "red",
+                backgroundColor: "#dc2626",
                 color: "#fff",
                 border: "none",
                 padding: "8px 15px",
-                borderRadius: "5px",
+                borderRadius: "6px",
                 cursor: "pointer",
+                fontWeight: "bold",
               }}
             >
               Logout
@@ -111,7 +141,7 @@ function Navbar() {
             <Link
               to="/login"
               style={{
-                color: "white",
+                color: "#fff",
                 textDecoration: "none",
               }}
             >
@@ -121,7 +151,7 @@ function Navbar() {
             <Link
               to="/register"
               style={{
-                color: "white",
+                color: "#fff",
                 textDecoration: "none",
               }}
             >
